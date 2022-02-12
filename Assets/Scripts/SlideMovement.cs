@@ -8,29 +8,23 @@ public class SlideMovement : MonoBehaviour
     [SerializeField] private BoxCollider sliderCollider;
     private Vector3 mOffset;
     private float mZCoord;
-    // Start is called before the first frame update
+
     void Start()
     {
         playerCannon = transform.Find("PlayerCannon").gameObject;
         sliderCollider = GetComponent<BoxCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void OnMouseDown()
     {
-        mZCoord = Camera.main.WorldToScreenPoint(playerCannon.transform.position).z;
+        mZCoord = Camera.main.WorldToScreenPoint(playerCannon.transform.position).z;//needed for correct screentoworld conversion
         // Store offset = gameobject world pos - mouse world pos
         mOffset = playerCannon.transform.position - GetMouseAsWorldPoint(mZCoord);
     }
 
     void OnMouseDrag()
     {
-        Vector3 targetPos = new Vector3(GetMouseAsWorldPoint(mZCoord).x + mOffset.x, playerCannon.transform.position.y, playerCannon.transform.position.z);
+        Vector3 targetPos = new Vector3(GetMouseAsWorldPoint(mZCoord).x + mOffset.x, playerCannon.transform.position.y, playerCannon.transform.position.z);//only move on x axis
 
         if (sliderCollider.bounds.Contains(targetPos))
         {
@@ -38,7 +32,7 @@ public class SlideMovement : MonoBehaviour
         }
     }
 
-    private Vector3 GetMouseAsWorldPoint(float mouseZCoord)
+    public Vector3 GetMouseAsWorldPoint(float mouseZCoord)
     {
         // Pixel coordinates of mouse (x,y)
         Vector3 mousePoint = Input.mousePosition;
