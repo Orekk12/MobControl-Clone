@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlayerMob
   - EnemyMob
+  - EnemyFort
+  - PlayerArea
   layers:
   - Default
   - TransparentFX

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ShootMob : MobSpawn
 {
-    [SerializeField] private GameObject enemyFort;
+    //[SerializeField] private GameObject enemyFort;
+    [SerializeField] protected float spawnCooldown = 1f;
+    protected float lastSpawnTime = 0f;
 
     void Start()
     {
         OP = ObjectPooler.SharedInstance;
-        enemyFort = GameObject.Find("GoalFort");
+        //enemyFort = GameObject.Find("GoalFort");
         SetSpawnPivot(transform.GetChild(0).gameObject.transform.GetChild(0).gameObject);
     }
     private void Update()
@@ -19,13 +21,14 @@ public class ShootMob : MobSpawn
             spawnPos = spawnPivot.transform.position;
             spawnRot = spawnPivot.transform.rotation;
         }
+        
     }
 
     private void OnMouseDrag()
     {
         if (lastSpawnTime + spawnCooldown <= Time.time)
         {
-            Spawn(spawnPos, spawnRot, enemyFort, 0);
+            Spawn(spawnPos, spawnRot, 0);
             lastSpawnTime = Time.time;
         }
     }

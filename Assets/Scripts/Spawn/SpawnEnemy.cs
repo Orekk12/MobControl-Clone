@@ -4,45 +4,48 @@ using UnityEngine;
 
 public class SpawnEnemy : MobSpawn
 {
-    [SerializeField] protected float waveSpawnCooldown = 2f;
+    [SerializeField] protected float waveSpawnCooldown = 0.01f;
     protected float waveLastSpawnTime = 0f;
-    // Start is called before the first frame update
+
     void Start()
     {
         OP = ObjectPooler.SharedInstance;
-        spawnCooldown = 0f;
         SetSpawnPivot(transform.GetChild(0).gameObject);
-    }
 
-    // Update is called once per frame
-    private void Update()
-    {
         if (spawnPivot != null)
         {
             spawnPos = spawnPivot.transform.position;
             spawnRot = spawnPivot.transform.rotation;
         }
+    }
+
+    private void Update()
+    {
         if (Input.GetKey(KeyCode.G))
         {
-            SpawnWave(1, 0);
+            SpawnWave(1);
+            //StartCoroutine(Wave1());
         }
     }
 
-    private void SpawnWave(int noSmallMob, int noBigMob)
+    private void SpawnWave(int mobIndex)
     {
         if (waveLastSpawnTime + waveSpawnCooldown <= Time.time)
         {
-            SpawnMobs(noSmallMob, 1);
-            SpawnMobs(noBigMob, 2);
+            RandomSpawn(mobIndex, 4);
             waveLastSpawnTime = Time.time;
         }
     }
 
-    private void SpawnMobs(int noMobs, int mobIndex)
+    private float prevRand = 0f;
+    private void RandomSpawn(int mobIndex, float range)
     {
-        for (int i = 0; i < noMobs; i++)
-        {
-            Spawn(spawnPos, spawnRot, mobIndex);
-        }
+        float rand = Random.Range(-range, range);
+        if (rand == prevRand)//dont spawn on top of each other
+            rand += 1f;
+        prevRand = rand;
+        //rand *= 0.1f;
+        Spawn(new Vector3(spawnPos.x + rand, spawnPos.y, spawnPos.z), spawnRot, mobIndex);
     }
+
 }
