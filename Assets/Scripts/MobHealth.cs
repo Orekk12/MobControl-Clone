@@ -6,7 +6,6 @@ public class MobHealth : MonoBehaviour
 {
     [SerializeField] private int HP = 1;
     [SerializeField] private int maxHP = 1;
-    [SerializeField] private float scaleMultiplier = 5f;
     private Vector3 defaultScale;
     private void Awake()
     {
