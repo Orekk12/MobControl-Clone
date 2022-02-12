@@ -193,13 +193,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 72627516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dafd56a543420f4a9929f20b21076b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 835106b631d204d4c9b742b04c44fed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OP: {fileID: 0}
-  shootPos: {x: 0, y: 0, z: 0}
-  shootRot: {x: 0, y: 0, z: 0, w: 0}
-  fireCooldown: 1
+  spawnPivot: {fileID: 0}
+  spawnPos: {x: 0, y: 0, z: 0}
+  spawnRot: {x: 0, y: 0, z: 0, w: 0}
+  spawnCooldown: 1
   enemyFort: {fileID: 0}
 --- !u!1 &146026192
 GameObject:
@@ -213,6 +214,7 @@ GameObject:
   - component: {fileID: 146026196}
   - component: {fileID: 146026195}
   - component: {fileID: 146026194}
+  - component: {fileID: 146026197}
   m_Layer: 0
   m_Name: GoalFort
   m_TagString: Untagged
@@ -297,6 +299,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 146026192}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &146026197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146026192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 602081138e0c2cf4e9607b7262f39591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OP: {fileID: 0}
+  spawnPivot: {fileID: 0}
+  spawnPos: {x: 0, y: 0, z: 0}
+  spawnRot: {x: 0, y: 0, z: 0, w: 0}
+  spawnCooldown: 1
+  waveSpawnCooldown: 1
 --- !u!1 &255472941
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +362,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsToPool:
   - objectToPool: {fileID: 1824401460694180586, guid: 5d17609d7ff18b5428b67152c95e41df, type: 3}
+    amountToPool: 50
+    shouldExpand: 1
+  - objectToPool: {fileID: 9136220811655891793, guid: 813996e4205b37c4a9657a2e19463fcc, type: 3}
     amountToPool: 50
     shouldExpand: 1
   pooledObjects: []
@@ -649,7 +672,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763184116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.45, z: 0.663}
+  m_LocalPosition: {x: 0, y: -0.395, z: 0.663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 146026193}
@@ -662,6 +685,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 72627517}
     m_Modifications:
+    - target: {fileID: 5824941555898274548, guid: 6c9a665df572f73438148e68a2e4c2bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5824941555898274548, guid: 6c9a665df572f73438148e68a2e4c2bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.077
+      objectReference: {fileID: 0}
     - target: {fileID: 5824941556977092792, guid: 6c9a665df572f73438148e68a2e4c2bb, type: 3}
       propertyPath: m_RootOrder
       value: 0

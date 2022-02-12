@@ -17,11 +17,22 @@ public class MobMovement : MonoBehaviour
     }
     public void StartMovement()
     {
-        if (targetObj != null || targetPos != Vector3.zero && !onMove)
+        if (targetObj != null && !onMove)
         {
             targetPos = targetObj.transform.position;
             Vector3 targetDir = targetPos - transform.position;
             m_Rigidbody.AddForce(targetDir * moveSpeed);
+            onMove = true;
+        }
+        else if (targetPos != Vector3.zero && !onMove)
+        {
+            Vector3 targetDir = targetPos - transform.position;
+            m_Rigidbody.AddForce(targetDir * moveSpeed);
+            onMove = true;
+        }
+        else if(!onMove)
+        {
+            m_Rigidbody.AddForce(Vector3.forward * moveSpeed * 50);
             onMove = true;
         }
     }
