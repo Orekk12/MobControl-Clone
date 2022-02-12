@@ -31,12 +31,15 @@ public class MobHealth : MonoBehaviour
         //if mobs hit each other
         if (gameObject != null && other.gameObject != null)
         {
-            if (gameObject.CompareTag("EnemyMob") && other.gameObject.CompareTag("PlayerMob") || gameObject.CompareTag("PlayerMob") && other.gameObject.CompareTag("EnemyMob") ||
-            gameObject.CompareTag("PlayerMob") && other.gameObject.CompareTag("EnemyFort") || gameObject.CompareTag("EnemyFort") && other.gameObject.CompareTag("PlayerMob"))
+            if (gameObject.CompareTag("EnemyMob") && other.gameObject.CompareTag("PlayerMob") || gameObject.CompareTag("PlayerMob") && other.gameObject.CompareTag("EnemyMob"))
             {
                 //other.gameObject.GetComponent<MobHealth>().ReduceHP(maxHP);
                 StartCoroutine(other.gameObject.GetComponent<MobHealth>().DelayedReduceHP(1));
                 //Debug.Log("hit" + other.gameObject.name);
+            }
+            else if (gameObject.CompareTag("PlayerMob") && other.gameObject.CompareTag("EnemyFort") || gameObject.CompareTag("EnemyFort") && other.gameObject.CompareTag("PlayerMob"))
+            {
+                other.gameObject.GetComponent<MobHealth>().ReduceHP(1);
             }
             else if (gameObject.CompareTag("EnemyMob") && other.gameObject.CompareTag("PlayerArea"))//if enemies enter player line
             {

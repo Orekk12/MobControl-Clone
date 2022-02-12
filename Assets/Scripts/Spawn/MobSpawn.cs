@@ -41,6 +41,28 @@ public class MobSpawn : MonoBehaviour
         playerMob.SetActive(true);
         playerMob.GetComponent<MobMovement>().StartMovement();
     }
+
+    private float prevRand = 0f;
+    protected void RandomSpawn(int mobIndex, float range)
+    {
+        float rand = Random.Range(-range, range);
+        if (rand == prevRand)//dont spawn on top of each other
+            rand += 1f;
+        prevRand = rand;
+        //rand *= 0.1f;
+        Spawn(new Vector3(spawnPos.x + rand, spawnPos.y, spawnPos.z), spawnRot, mobIndex);
+    }
+
+    /*protected IEnumerator SpawnBig5(int mobIndex)
+    {
+      
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            RandomSpawn(mobIndex, 4);
+        }
+    }*/
+
     protected void SetSpawnPivot(GameObject obj)
     {
         spawnPivot = obj;

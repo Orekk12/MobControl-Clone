@@ -37,15 +37,4 @@ public class SpawnEnemy : MobSpawn
         }
     }
 
-    private float prevRand = 0f;
-    private void RandomSpawn(int mobIndex, float range)
-    {
-        float rand = Random.Range(-range, range);
-        if (rand == prevRand)//dont spawn on top of each other
-            rand += 1f;
-        prevRand = rand;
-        //rand *= 0.1f;
-        Spawn(new Vector3(spawnPos.x + rand, spawnPos.y, spawnPos.z), spawnRot, mobIndex);
-    }
-
 }
