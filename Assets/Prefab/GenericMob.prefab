@@ -127,4 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPos: {x: 0, y: 0, z: 0}
-  moveSpeed: 300
+  targetObj: {fileID: 0}
+  moveSpeed: 5
+  onMove: 0
