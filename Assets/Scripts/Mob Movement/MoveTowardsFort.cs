@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class MoveTowardsFort : MonoBehaviour
 {
+    [SerializeField] private bool foundFort = false;
     private void OnTriggerEnter(Collider other)//if player mobs are close enoguh to enemy fort
     {
         if (other.CompareTag("EnemyFort"))
         {
             GameObject parent = transform.parent.gameObject;
-            parent.GetComponent<Rigidbody>().velocity = (other.gameObject.transform.position - transform.position).normalized * parent.GetComponent<MobMovement>().GetMoveSpeed();
+            MobMovement moveScript = parent.GetComponent<MobMovement>();
+            moveScript.SetVelocityTarget(other.gameObject);
+            foundFort = true;
         }
     }
 }

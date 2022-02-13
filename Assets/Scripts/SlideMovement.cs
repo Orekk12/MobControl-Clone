@@ -20,7 +20,6 @@ public class SlideMovement : MonoBehaviour
         mZCoord = Camera.main.WorldToScreenPoint(playerCannon.transform.position).z;//needed for correct screentoworld conversion
         // Store offset = gameobject world pos - mouse world pos
         mOffset = playerCannon.transform.position - GetMouseAsWorldPoint(mZCoord);
-        Debug.Log("asd");
     }
 
     void OnMouseDrag()

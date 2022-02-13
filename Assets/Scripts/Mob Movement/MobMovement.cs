@@ -11,6 +11,8 @@ public class MobMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float defMoveSpeed;
     [SerializeField] private bool onMove = false;
+    [SerializeField] private Vector3 targetVelocity;
+    [SerializeField] private GameObject targetVelocityObj;
 
     private Rigidbody m_Rigidbody;
 
@@ -19,21 +21,26 @@ public class MobMovement : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         defMoveSpeed = moveSpeed;
     }
+    private void Start()
+    {
+        if (gameObject.CompareTag("PlayerMob"))//player mob walks in the opposite way of enemy mob
+        {
+            targetVelocity = -Vector3.forward.normalized * moveSpeed;
+        }
+        else
+        {
+            targetVelocity = Vector3.forward.normalized * moveSpeed;
+        }
+    }
     private void Update()
     {
-        if (onMove)
+        if (onMove && targetVelocityObj == null)
         {
-            if (gameObject.CompareTag("PlayerMob"))//player mob walks in the opposite way of enemy mob
-            {
-                //m_Rigidbody.AddForce(-Vector3.forward.normalized * moveSpeed * 50);
-                m_Rigidbody.velocity = -Vector3.forward.normalized * moveSpeed;
-            }
-            else
-            {
-                //m_Rigidbody.AddForce(Vector3.forward.normalized * moveSpeed * 50);
-                m_Rigidbody.velocity = Vector3.forward.normalized * moveSpeed;
-            }
-            
+            m_Rigidbody.velocity = targetVelocity;
+        }
+        else if (onMove && targetVelocityObj != null)
+        {
+            m_Rigidbody.velocity = (targetVelocityObj.gameObject.transform.position - transform.position).normalized * GetMoveSpeed();
         }
 
     }
@@ -67,6 +74,14 @@ public class MobMovement : MonoBehaviour
     public float GetMoveSpeed()
     {
         return moveSpeed;
+    }
+    public void SetVelocity(Vector3 vel)
+    {
+        targetVelocity = vel;
+    }
+    public void SetVelocityTarget(GameObject velTarget)
+    {
+        targetVelocityObj = velTarget;
     }
     private IEnumerator DeactivateDelay(float delay)
     {

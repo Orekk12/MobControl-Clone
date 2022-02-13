@@ -6,6 +6,7 @@ public class MobHealth : MonoBehaviour
 {
     [SerializeField] private int HP = 1;
     [SerializeField] private int maxHP = 1;
+    [SerializeField] private int mobIndex = 1;
     private Vector3 defaultScale;
     private void Awake()
     {
@@ -21,8 +22,7 @@ public class MobHealth : MonoBehaviour
         if (HP <= 0 && (gameObject.CompareTag("EnemyMob") || gameObject.CompareTag("PlayerMob")))
         {
             //kill mobs
-            gameObject.SetActive(false);
-            //Debug.Log("kill hp:" + HP);
+            MobKill();
         }
     }
 
@@ -37,9 +37,11 @@ public class MobHealth : MonoBehaviour
                 StartCoroutine(other.gameObject.GetComponent<MobHealth>().DelayedReduceHP(1));
                 //Debug.Log("hit" + other.gameObject.name);
             }
-            else if (gameObject.CompareTag("PlayerMob") && other.gameObject.CompareTag("EnemyFort") || gameObject.CompareTag("EnemyFort") && other.gameObject.CompareTag("PlayerMob"))
+            else if (gameObject.CompareTag("PlayerMob") && other.gameObject.CompareTag("EnemyFort") )
             {
-                other.gameObject.GetComponent<MobHealth>().ReduceHP(1);
+                //StartCoroutine(other.gameObject.GetComponent<MobHealth>().DelayedReduceHP(1));
+                StartCoroutine(HitFort(other.gameObject));
+
             }
             else if (gameObject.CompareTag("EnemyMob") && other.gameObject.CompareTag("PlayerArea"))//if enemies enter player line
             {
@@ -48,6 +50,11 @@ public class MobHealth : MonoBehaviour
         }
     }
 
+    public void MobKill()
+    {
+        GetComponent<MobDuplicate>().ResetDupeGate();
+        gameObject.SetActive(false);
+    }
     public void ReduceHP(int dmg)
     {
         HP -= dmg;
@@ -60,13 +67,24 @@ public class MobHealth : MonoBehaviour
         HP -= dmg;
         if (HP < 0)
             HP = 0;
-        if (HP > 0)
+        if (HP > 0 && !gameObject.CompareTag("EnemyFort"))
         {
             transform.localScale = defaultScale * (Mathf.Sqrt(HP));
         }
     }
+    public IEnumerator HitFort(GameObject targetFort)
+    {
+        gameObject.GetComponent<MobMovement>().SetMoveSpeed(0f);
+        yield return new WaitForSeconds(0.7f);
+        targetFort.GetComponent<MobHealth>().ReduceHP(HP);
+        HP = 0;
+    }
     public void SetToMAXHP()
     {
         HP = maxHP;
+    }
+    public int GetMobIndex()
+    {
+        return mobIndex;
     }
 }
