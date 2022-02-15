@@ -16,25 +16,14 @@ public class MobSpawn : MonoBehaviour
         OP = ObjectPooler.SharedInstance;
     }
 
-    protected void Spawn(Vector3 pos, Quaternion rot, GameObject targetObj, int mobIndex)//spawn with target objct
-    {
-        GameObject playerMob = OP.GetPooledObject(mobIndex);
-        if (playerMob.CompareTag("EnemyMob") || playerMob.CompareTag("PlayerMob"))
-        {
-            playerMob.GetComponent<MobHealth>().SetToMAXHP();
-        }
-        playerMob.transform.position = pos;
-        playerMob.transform.rotation = rot;
-        playerMob.SetActive(true);
-        playerMob.GetComponent<MobMovement>().SetTargetObj(targetObj);
-        playerMob.GetComponent<MobMovement>().StartMovement();
-    }
     protected GameObject Spawn(Vector3 pos, Quaternion rot, int mobIndex)//spawn and walk forward
     {
         GameObject playerMob = OP.GetPooledObject(mobIndex);
         if (playerMob.CompareTag("EnemyMob") || playerMob.CompareTag("PlayerMob"))
         {
-            playerMob.GetComponent<MobHealth>().SetToMAXHP();
+            playerMob.GetComponent<MobHealth>().Initalize();
+            playerMob.GetComponent<MobMovement>().SetVelocityTarget(null);
+
         }
         if (Physics.CheckSphere(pos, 0.5f))
         {
@@ -43,7 +32,7 @@ public class MobSpawn : MonoBehaviour
         playerMob.transform.position = pos;
         playerMob.transform.rotation = rot;
         playerMob.SetActive(true);
-        playerMob.GetComponent<MobMovement>().StartMovement();
+        playerMob.GetComponent<MobMovement>().SetVelocityFront();
 
         return playerMob;
     }

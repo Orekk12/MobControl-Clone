@@ -23,22 +23,16 @@ public class MobMovement : MonoBehaviour
     }
     private void Start()
     {
-        if (gameObject.CompareTag("PlayerMob"))//player mob walks in the opposite way of enemy mob
-        {
-            targetVelocity = -Vector3.forward.normalized * moveSpeed;
-        }
-        else
-        {
-            targetVelocity = Vector3.forward.normalized * moveSpeed;
-        }
+        SetVelocityFront();
+        //StartCoroutine(SetStartMS());
     }
     private void Update()
     {
-        if (onMove && targetVelocityObj == null)
+        if (targetVelocityObj == null)
         {
             m_Rigidbody.velocity = targetVelocity;
         }
-        else if (onMove && targetVelocityObj != null)
+        else if (targetVelocityObj != null)
         {
             m_Rigidbody.velocity = (targetVelocityObj.gameObject.transform.position - transform.position).normalized * GetMoveSpeed();
         }
@@ -47,12 +41,21 @@ public class MobMovement : MonoBehaviour
     public void StartMovement()
     {
         onMove = true;
+        StartCoroutine(SetStartMS());
+        //DeactivateDelay(30f);
+    }
 
-        DeactivateDelay(30f);
+    private IEnumerator SetStartMS()
+    {
+        SetVelocity(targetVelocity * 1.5f);
+        yield return new WaitForSeconds(0.7f);
+        SetVelocity(targetVelocity /1.5f);
+
     }
     public void SetTargetObj(GameObject tObj)
     {
         targetObj = tObj;
+        
     }
     public void SetTargetPos(Vector3 tPos)
     {
@@ -65,15 +68,29 @@ public class MobMovement : MonoBehaviour
             m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         }
         else
+        {
             moveSpeed = ms;
+            m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        }
     }
     public void SetDefMoveSpeed()
     {
-        moveSpeed = defMoveSpeed;
+        SetMoveSpeed(defMoveSpeed);
     }
     public float GetMoveSpeed()
     {
         return moveSpeed;
+    }
+    public void SetVelocityFront()
+    {
+        if (gameObject.CompareTag("PlayerMob"))
+        {
+            SetVelocity(-Vector3.forward.normalized * moveSpeed);
+        }
+        else
+        {
+            SetVelocity(Vector3.forward.normalized * moveSpeed);
+        }
     }
     public void SetVelocity(Vector3 vel)
     {
