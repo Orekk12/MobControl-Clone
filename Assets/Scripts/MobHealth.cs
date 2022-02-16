@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MobHealth : MonoBehaviour
 {
@@ -59,7 +60,21 @@ public class MobHealth : MonoBehaviour
             else if (gameObject.CompareTag("EnemyMob") && other.gameObject.CompareTag("PlayerArea"))//if enemies enter player line
             {
                 //game over
+                Debug.Log("area hit");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (gameObject.CompareTag("EnemyMob") && other.gameObject.CompareTag("PlayerArea"))//if enemies enter player line
+        {
+            //game over
+            Debug.Log("area hit");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
         }
     }
 
@@ -119,7 +134,7 @@ public class MobHealth : MonoBehaviour
         GetComponent<MobDuplicate>().ResetDupeGate();
         transform.localScale = defaultScale;
         gameObject.SetActive(false);
-        Debug.Log("kill" + gameObject.name);
+        //Debug.Log("kill" + gameObject.name);
     }
     public void ReduceHP(int dmg)
     {
@@ -141,9 +156,11 @@ public class MobHealth : MonoBehaviour
     public void HitFort(GameObject targetFort)
     {
         targetFort.GetComponent<MobHealth>().ReduceHP(HP);
-        if (targetFort.GetComponent<FortManager>().CheckHitCD())
+        var fortMng = targetFort.GetComponent<FortManager>();
+        if (fortMng.CheckHitCD())
         {
-            targetFort.GetComponent<FortManager>().FortHitEffect(hitParticle, targetFort.transform.GetChild(1).gameObject.transform.position, targetFort.transform.GetChild(1).gameObject.transform.rotation);
+            fortMng.FortHitEffect(hitParticle, targetFort.transform.GetChild(1).gameObject.transform.position, targetFort.transform.GetChild(1).gameObject.transform.rotation);
+            fortMng.reduceHP();
         }
         GetHit(HP);
     }

@@ -56,7 +56,7 @@ public class SpawnEnemy : MobSpawn
     private void SpawnMob(int mobIndex)
     {
         GameObject obj = RandomSpawn(mobIndex, 4);
-        obj.GetComponent<MobMovement>().StartMovement();
+        //obj.GetComponent<MobMovement>().StartMovement();
     }
 
     

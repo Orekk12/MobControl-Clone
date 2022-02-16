@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FortManager : MonoBehaviour
 {
@@ -18,8 +19,18 @@ public class FortManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fortText.GetComponent<TextMesh>().text = hpScript.GetHP().ToString();
 
+    }
+
+    public void reduceHP()
+    {
+        fortText.GetComponent<TextMesh>().text = hpScript.GetHP().ToString();
+        if (hpScript.GetHP() <= 0)
+        {
+            gameObject.SetActive(false);
+            //gameover
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public bool CheckHitCD()
