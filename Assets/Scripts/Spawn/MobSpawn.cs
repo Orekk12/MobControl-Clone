@@ -8,6 +8,7 @@ public class MobSpawn : MonoBehaviour
     [SerializeField] protected GameObject spawnPivot;
     [SerializeField] protected Vector3 spawnPos;
     [SerializeField] protected Quaternion spawnRot;
+    [SerializeField] protected float randSpawnRange = 2f;
   
     
     // Start is called before the first frame update
@@ -27,7 +28,7 @@ public class MobSpawn : MonoBehaviour
         }
         if (Physics.CheckSphere(pos, 0.5f))
         {
-            pos = GiveRandomPos(2f);
+            pos = GiveRandomPos(randSpawnRange);
         }
         playerMob.transform.position = pos;
         playerMob.transform.rotation = rot;

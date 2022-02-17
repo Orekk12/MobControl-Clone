@@ -54,6 +54,7 @@ public class MobHealth : MonoBehaviour
             else if (gameObject.CompareTag("PlayerMob") && other.gameObject.CompareTag("EnemyFort") )
             {
                 //StartCoroutine(other.gameObject.GetComponent<MobHealth>().DelayedReduceHP(1));
+                Debug.Log("asdasdas");
                 HitFort(other.gameObject);
 
             }

@@ -14,6 +14,7 @@ public class FortManager : MonoBehaviour
     {
         fortText = transform.GetChild(2).gameObject;
         hpScript = GetComponent<MobHealth>();
+        fortText.GetComponent<TextMesh>().text = hpScript.GetHP().ToString(); 
     }
 
     // Update is called once per frame
