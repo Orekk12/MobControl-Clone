@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class SlideMovement : MonoBehaviour
 {
+    [Header("- - - References- - -")]
+
     [SerializeField] private GameObject playerCannon;
     [SerializeField] private BoxCollider sliderCollider;
+    [Header("- - - Variables - - -")]
     private Vector3 mOffset;
     private float mZCoord;
 
     void Start()
     {
+        //initalize references
         playerCannon = transform.Find("PlayerCannon").gameObject;
         sliderCollider = GetComponent<BoxCollider>();
     }
@@ -26,7 +30,7 @@ public class SlideMovement : MonoBehaviour
     {
         Vector3 targetPos = new Vector3(GetMouseAsWorldPoint(mZCoord).x + mOffset.x, playerCannon.transform.position.y, playerCannon.transform.position.z);//only move on x axis
 
-        if (sliderCollider.bounds.Contains(targetPos))
+        if (sliderCollider.bounds.Contains(targetPos))//dont move cannon outside ofthe slider
         {
             playerCannon.transform.position = targetPos;
         }

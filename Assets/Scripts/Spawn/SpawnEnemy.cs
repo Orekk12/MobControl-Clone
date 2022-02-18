@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnEnemy : MobSpawn
 {
+    [Header("- - - Variables - - -")]
     [SerializeField] protected float waveSpawnDensity = 0.01f;
     [SerializeField] private float waveSpawnPeriod = 5f;
     [SerializeField] private int waveEnemyAmt = 5;
@@ -23,16 +24,7 @@ public class SpawnEnemy : MobSpawn
         StartCoroutine(SpawnPeriodically(50, waveSpawnPeriod));
     }
 
-    private void Update()
-    {
-        //if (Input.GetKey(KeyCode.G) && canSpawn)
-        //{
-        //    StartCoroutine(SpawnWave(1, waveSpawnDensity, 20));
-        //    canSpawn = false;
-        //}
-    }
-
-    private IEnumerator SpawnPeriodically(int amt, float period)
+    private IEnumerator SpawnPeriodically(int amt, float period)//loops until level ends
     {
         for (int i = 0; i < amt; i++)
         {
@@ -40,7 +32,6 @@ public class SpawnEnemy : MobSpawn
             {
                 yield return new WaitForSeconds(period);
                 StartCoroutine(SpawnWave(1, waveSpawnDensity, waveEnemyAmt));
-                //StartCoroutine(SpawnWave(3, waveSpawnDensity, 3));
             }
         }
     }
@@ -56,15 +47,7 @@ public class SpawnEnemy : MobSpawn
     private void SpawnMob(int mobIndex)
     {
         GameObject obj = RandomSpawn(mobIndex, 4);
-        //obj.GetComponent<MobMovement>().StartMovement();
     }
 
-    
-    //private void SpawnWave(int mobIndex)
-    //{
-    //    if (waveLastSpawnTime + waveSpawnDensity <= Time.time)
-    //    {
-    //        SpawnMob(mobIndex);
-    //    }
-    //}
+   
 }

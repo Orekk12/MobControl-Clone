@@ -11,7 +11,7 @@ public class MoveTowardsFort : MonoBehaviour
         {
             GameObject parent = transform.parent.gameObject;
             MobMovement moveScript = parent.GetComponent<MobMovement>();
-            moveScript.SetVelocityTarget(other.gameObject);
+            moveScript.SetVelocityTarget(other.gameObject);//set target to fort
             foundFort = true;
         }
     }

@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class MobMovement : MonoBehaviour
 {
-
+    [Header("- - - References- - -")]
     [SerializeField] private Vector3 targetPos;
     [SerializeField] private GameObject targetObj;
+    [SerializeField] private GameObject targetVelocityObj;
 
+    [Header("- - - Variables - - -")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float defMoveSpeed;
     [SerializeField] private bool onMove = false;
     [SerializeField] private Vector3 targetVelocity;
-    [SerializeField] private GameObject targetVelocityObj;
 
     private Rigidbody m_Rigidbody;
 
@@ -45,7 +46,7 @@ public class MobMovement : MonoBehaviour
         //DeactivateDelay(30f);
     }
 
-    private IEnumerator SetStartMS()
+    private IEnumerator SetStartMS()//used to replicate the fast shooting effect on the original game
     {
         SetVelocity(targetVelocity * 1.5f);
         yield return new WaitForSeconds(0.7f);

@@ -7,6 +7,7 @@ public class GateSlide : MonoBehaviour
     public enum OccilationFuntion { Sine, Cosine }
     [SerializeField] private float slideRange = 3f;
     private float oscillateOffset;
+
     public void Start()
     {
         oscillateOffset = gameObject.transform.position.x;
@@ -28,7 +29,6 @@ public class GateSlide : MonoBehaviour
             {
                 gameObject.transform.position = new Vector3(oscillateOffset + Mathf.Cos(Time.time) * scalar, gameObject.transform.position.y, gameObject.transform.position.z);
             }
-            //gameObject.transform.position += oscilatePOs;
             yield return new WaitForEndOfFrame();
         }
     }

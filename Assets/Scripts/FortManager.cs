@@ -5,23 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class FortManager : MonoBehaviour
 {
+    [Header("- - - References- - -")]
+
     [SerializeField] private GameObject fortText;
     [SerializeField] private MobHealth hpScript;
+
+    [Header("- - - Variables - - -")]
+
     private float fortHitCD = 1f;
     private float fortLastHitTime = 0f;
-    // Start is called before the first frame update
+
     void Start()
     {
+        //initalize references
         fortText = transform.GetChild(2).gameObject;
         hpScript = GetComponent<MobHealth>();
         fortText.GetComponent<TextMesh>().text = hpScript.GetHP().ToString(); 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void reduceHP()
     {
@@ -30,7 +31,7 @@ public class FortManager : MonoBehaviour
         {
             gameObject.SetActive(false);
             //gameover
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            hpScript.LevelOver();
         }
     }
 

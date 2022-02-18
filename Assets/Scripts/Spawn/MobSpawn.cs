@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class MobSpawn : MonoBehaviour
 {
+    [Header("- - - References- - -")]
+
     [SerializeField] protected ObjectPooler OP;
     [SerializeField] protected GameObject spawnPivot;
+
+    [Header("- - - Variables - - -")]
+
     [SerializeField] protected Vector3 spawnPos;
     [SerializeField] protected Quaternion spawnRot;
     [SerializeField] protected float randSpawnRange = 2f;
@@ -24,9 +29,9 @@ public class MobSpawn : MonoBehaviour
         {
             playerMob.GetComponent<MobHealth>().Initalize();
             playerMob.GetComponent<MobMovement>().SetVelocityTarget(null);
-
+            //need to initazlie values again because of objectpooler
         }
-        if (Physics.CheckSphere(pos, 0.5f))
+        if (Physics.CheckSphere(pos, 0.5f))//check if spawn pos intersects with wall
         {
             pos = GiveRandomPos(randSpawnRange);
         }
@@ -47,22 +52,12 @@ public class MobSpawn : MonoBehaviour
         prevRand = rand;
         return new Vector3(spawnPos.x + rand, spawnPos.y, spawnPos.z);
     }
-    protected GameObject RandomSpawn(int mobIndex, float range)
+    protected GameObject RandomSpawn(int mobIndex, float range)//spawn in a range
     {
         Vector3 randomPos = GiveRandomPos(range);
         //rand *= 0.1f;
         return Spawn(randomPos, spawnRot, mobIndex);
     }
-
-    /*protected IEnumerator SpawnBig5(int mobIndex)
-    {
-      
-        for (int i = 0; i < 5; i++)
-        {
-            yield return new WaitForSeconds(0.01f);
-            RandomSpawn(mobIndex, 4);
-        }
-    }*/
 
     protected void SetSpawnPivot(GameObject obj)
     {
