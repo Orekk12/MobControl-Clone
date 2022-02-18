@@ -59,7 +59,8 @@ public class MobHealth : MonoBehaviour
         if (gameObject.CompareTag("EnemyMob") && other.gameObject.CompareTag("PlayerArea"))//if enemies enter player line
         {
             //game over
-            LevelOver();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);// start the level again
+            //LevelOver();
 
         }
     }
